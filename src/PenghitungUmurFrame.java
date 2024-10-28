@@ -169,17 +169,14 @@ public class PenghitungUmurFrame extends javax.swing.JFrame {
         Date tanggalLahir = dateChooserTanggalLahir.getDate();
         if (tanggalLahir != null) {
             // Menghitung umur dan hari ulang tahun berikutnya
-            LocalDate lahir =
-    tanggalLahir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate lahir = tanggalLahir.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate sekarang = LocalDate.now();
         String umur = helper.hitungUmurDetail(lahir, sekarang);
         txtUmur.setText(umur);
 
         // Menghitung tanggal ulang tahun berikutnya
-        LocalDate ulangTahunBerikutnya =
-    helper.hariUlangTahunBerikutnya(lahir, sekarang);
-        String hariUlangTahunBerikutnya =
-    helper.getDayOfWeekInIndonesian(ulangTahunBerikutnya);
+        LocalDate ulangTahunBerikutnya = helper.hariUlangTahunBerikutnya(lahir, sekarang);
+        String hariUlangTahunBerikutnya = helper.getDayOfWeekInIndonesian(ulangTahunBerikutnya);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -196,7 +193,7 @@ public class PenghitungUmurFrame extends javax.swing.JFrame {
     peristiwaThread = new Thread(() -> {
         try {
             txtAreaPeristiwa.setText("Tunggu, sedang mengambil data...\n");
-            helper.getPeristiwaBarisPerBaris(ulangTahunBerikutnya,txtAreaPeristiwa, () -> stopFetching);
+            helper.getPeristiwaBarisPerBaris(ulangTahunBerikutnya, txtAreaPeristiwa, () -> stopFetching);
                 if (!stopFetching) {
                     javax.swing.SwingUtilities.invokeLater(() ->txtAreaPeristiwa.append("Selesai mengambil data peristiwa"));
                 }
@@ -204,7 +201,6 @@ public class PenghitungUmurFrame extends javax.swing.JFrame {
             if (Thread.currentThread().isInterrupted()) {
                 javax.swing.SwingUtilities.invokeLater(() -> txtAreaPeristiwa.setText("Pengambilan data dibatalkan.\n"));
         }
-
     }
     });
         peristiwaThread.start();
